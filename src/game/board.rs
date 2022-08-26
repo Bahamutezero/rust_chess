@@ -1,140 +1,107 @@
 use super::piece::Piece;
-use super::piece::Side;
-use super::piece::Type;
-
-fn b_b() -> Piece {
-    Piece::new(Side::Black, Type::Bishop)
-}
-
-fn b_p() -> Piece {
-    Piece::new(Side::Black, Type::Pawn)
-}
-
-fn b_k() -> Piece {
-    Piece::new(Side::Black, Type::King)
-}
-
-fn b_q() -> Piece {
-    Piece::new(Side::Black, Type::Queen)
-}
-
-fn b_r() -> Piece {
-    Piece::new(Side::Black, Type::Rook)
-}
-
-fn b_kn() -> Piece {
-    Piece::new(Side::Black, Type::Knight)
-}
-
-fn w_b() -> Piece {
-    Piece::new(Side::White, Type::Bishop)
-}
-
-fn w_p() -> Piece {
-    Piece::new(Side::White, Type::Pawn)
-}
-
-fn w_k() -> Piece {
-    Piece::new(Side::White, Type::King)
-}
-
-fn w_q() -> Piece {
-    Piece::new(Side::White, Type::Queen)
-}
-
-fn w_r() -> Piece {
-    Piece::new(Side::White, Type::Rook)
-}
-
-fn w_kn() -> Piece {
-    Piece::new(Side::White, Type::Knight)
-}
-
-fn n() -> Piece {
-    Piece::new(Side::None, Type::Empty)
-}
 
 pub struct Board {
     board: [Piece; 64],
 }
 
+fn p(m: &str) -> Piece {
+    Piece::new_for_str(m)
+}
+
 impl Board {
+    pub fn get_piece(&mut self, pos: (usize, usize)) -> Option<&Piece> {
+        let idx = Board::pos_to_idx(pos);
+        if idx > 63 {
+            return None;
+        }
+        Some(&self.board[idx])
+    }
+
     pub fn print(&mut self) {
         for i in 0..8 {
             for j in 0..8 {
-                print!("{}", self.board[i * 8 + j].to_string());
+                print!("{}", self.board[(7 - i) * 8 + j].to_string());
             }
             print!("\n");
         }
     }
 
+    pub fn set(&mut self, pos: (usize, usize), piece: Piece) {
+        let idx = Board::pos_to_idx(pos);
+        self.board[idx] = piece;
+    }
+
+    fn pos_to_idx(pos: (usize, usize)) -> usize {
+        pos.0 + pos.1 * 8
+    }
+
     pub fn new() -> Board {
         Board {
             board: [
-                b_r(),
-                b_kn(),
-                b_b(),
-                b_k(),
-                b_q(),
-                b_b(),
-                b_kn(),
-                b_r(),
-                b_p(),
-                b_p(),
-                b_p(),
-                b_p(),
-                b_p(),
-                b_p(),
-                b_p(),
-                b_p(),
-                n(),
-                n(),
-                n(),
-                n(),
-                n(),
-                n(),
-                n(),
-                n(),
-                n(),
-                n(),
-                n(),
-                n(),
-                n(),
-                n(),
-                n(),
-                n(),
-                n(),
-                n(),
-                n(),
-                n(),
-                n(),
-                n(),
-                n(),
-                n(),
-                n(),
-                n(),
-                n(),
-                n(),
-                n(),
-                n(),
-                n(),
-                n(),
-                w_p(),
-                w_p(),
-                w_p(),
-                w_p(),
-                w_p(),
-                w_p(),
-                w_p(),
-                w_p(),
-                w_r(),
-                w_kn(),
-                w_b(),
-                w_k(),
-                w_q(),
-                w_b(),
-                w_kn(),
-                w_r(),
+                p("wr"),
+                p("wkn"),
+                p("wb"),
+                p("wq"),
+                p("wk"),
+                p("wb"),
+                p("wkn"),
+                p("wr"),
+                p("wp"),
+                p("wp"),
+                p("wp"),
+                p("wp"),
+                p("wp"),
+                p("wp"),
+                p("wp"),
+                p("wp"),
+                p("e"),
+                p("e"),
+                p("e"),
+                p("e"),
+                p("e"),
+                p("e"),
+                p("e"),
+                p("e"),
+                p("e"),
+                p("e"),
+                p("e"),
+                p("e"),
+                p("e"),
+                p("e"),
+                p("e"),
+                p("e"),
+                p("e"),
+                p("e"),
+                p("e"),
+                p("e"),
+                p("e"),
+                p("e"),
+                p("e"),
+                p("e"),
+                p("e"),
+                p("e"),
+                p("e"),
+                p("e"),
+                p("e"),
+                p("e"),
+                p("e"),
+                p("e"),
+                p("bp"),
+                p("bp"),
+                p("bp"),
+                p("bp"),
+                p("bp"),
+                p("bp"),
+                p("bp"),
+                p("bp"),
+                p("br"),
+                p("bkn"),
+                p("bb"),
+                p("bq"),
+                p("bk"),
+                p("bb"),
+                p("bkn"),
+                p("br"),
             ],
         }
     }
